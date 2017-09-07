@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.21)  22 AUG 2017 00:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.6)  6 SEP 2017 22:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **lab_report_1.tex
 (./lab_report_1.tex
 LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 5 language(s) loaded.
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
@@ -587,25 +587,33 @@ Grid set 16 x 16 = 38.39343pt x 49.68562pt
 \TPboxrulesize=\dimen170
 \TP@tbargs=\toks22
 \TP@prevdepth=\dimen171
-) (./lab_report_1.aux)
+) (/usr/share/texlive/texmf-dist/tex/latex/base/flafter.sty
+Package: flafter 2015/09/05 v1.3a Standard LaTeX floats after reference (FMi)
+Applying: [2015/01/01] float order in 2-column on input line 49.
+Already applied: [0000/00/00] float order in 2-column on input line 151.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
+(./lab_report_1.aux)
 \openout1 = `lab_report_1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
 .................................................
 . chemgreek info: "mapping-activated"
 . 
-. Activating mapping `default' on line 50.
+. Activating mapping `default' on line 52.
 .................................................
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
@@ -678,48 +686,90 @@ File: siunitx-abbreviations.cfg 2016/03/01 v2.6q siunitx: Abbreviated units
 )
 \c__siunitx_mathsf_int=\count271
 \c__siunitx_mathtt_int=\count272
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 84.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 85.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 85.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<placeholder.jpg, id=15, 351.3125pt x 193.72375pt>
-File: placeholder.jpg Graphic file (type jpg)
- <use placeholder.jpg>
-Package pdftex.def Info: placeholder.jpg used on input line 174.
-(pdftex.def)             Requested size: 224.2479pt x 123.66057pt.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 209--209
+[]\OT1/cmtt/m/n/10 MOVE.L #$900 ,A5 ;set register with address, this line is at
+ $1004[] 
+ []
 
-[2]
-No file lab_report_1.bbl.
-[3 <./placeholder.jpg>] (./lab_report_1.aux) ) 
+<PARTa.PNG, id=21, 420.82219pt x 639.13782pt>
+File: PARTa.PNG Graphic file (type png)
+ <use PARTa.PNG>
+Package pdftex.def Info: PARTa.PNG used on input line 231.
+(pdftex.def)             Requested size: 224.2479pt x 340.58464pt.
+
+<PARTa1.PNG, id=23, 371.88937pt x 211.54031pt>
+File: PARTa1.PNG Graphic file (type png)
+ <use PARTa1.PNG>
+Package pdftex.def Info: PARTa1.PNG used on input line 235.
+(pdftex.def)             Requested size: 224.2479pt x 127.56104pt.
+
+<PARTb.PNG, id=24, 443.40656pt x 630.85687pt>
+File: PARTb.PNG Graphic file (type png)
+ <use PARTb.PNG>
+Package pdftex.def Info: PARTb.PNG used on input line 243.
+(pdftex.def)             Requested size: 224.2479pt x 319.05669pt.
+
+<a.PNG, id=25, 312.41719pt x 220.57407pt>
+File: a.PNG Graphic file (type png)
+ <use a.PNG>
+Package pdftex.def Info: a.PNG used on input line 245.
+(pdftex.def)             Requested size: 224.2479pt x 158.32854pt.
+
+<b.PNG, id=26, 332.74312pt x 170.13562pt>
+File: b.PNG Graphic file (type png)
+ <use b.PNG>
+Package pdftex.def Info: b.PNG used on input line 252.
+(pdftex.def)             Requested size: 224.2479pt x 114.66264pt.
+
+<c.PNG, id=27, 333.49594pt x 230.36063pt>
+File: c.PNG Graphic file (type png)
+ <use c.PNG>
+Package pdftex.def Info: c.PNG used on input line 254.
+(pdftex.def)             Requested size: 224.2479pt x 154.89969pt.
+ [4]
+
+LaTeX Warning: Text page 5 contains only floats.
+
+
+Overfull \vbox (3.03456pt too high) has occurred while \output is active []
+
+
+[5 <./PARTa.PNG> <./PARTa1.PNG>] [6 <./PARTb.PNG> <./a.PNG>] [7 <./b.PNG> <./c.
+PNG>] [8
+
+] (./lab_report_1.aux) ) 
 Here is how much of TeX's memory you used:
- 13993 strings out of 494910
- 291233 string characters out of 6179836
- 327360 words of memory out of 5000000
- 17180 multiletter control sequences out of 15000+600000
- 12491 words of font info for 47 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
+ 14045 strings out of 493029
+ 292009 string characters out of 6136235
+ 332158 words of memory out of 5000000
+ 17460 multiletter control sequences out of 15000+600000
+ 12504 words of font info for 47 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
  40i,6n,44p,10440b,528s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on lab_report_1.pdf (3 pages, 150845 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxt
+i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on lab_report_1.pdf (8 pages, 211159 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 84 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

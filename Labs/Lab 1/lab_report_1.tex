@@ -30,6 +30,8 @@
 \usepackage{amsmath} % Required for some math elements 
 \usepackage{enumitem}
 \usepackage{textpos}
+\usepackage{flafter}
+\usepackage[section]{placeins}
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
@@ -63,9 +65,8 @@
 
 \begin{center}
 \begin{tabular}{l r}
-Date Performed: & TBD \\ % Date the experiment was performed
-Partners: & TBD \\ % Partner names
-%& Mary Smith \\
+Date Performed: & 31/AUG/2017 \\ % Date the experiment was performedalph
+Partners: & Anh Nguyen \\ 
 Instructor: & Professor Saniie % Instructor/supervisor
 \end{tabular}
 \end{center}
@@ -138,74 +139,128 @@ The MC 68000 is a 16/32-bit CISC microprocessor, which implements a 32-bit instr
 			\item Use trace mode to check register changes
 			\item Repeat for programs in Table 1.2 - 1.4
 			\item Set SANPER-1 ELU to hardware single-step mode and reset it
-			\item Depress the SINGLE STEP PULSE and observe
+			\item Depress the SINGLE STEP PULSE and observe (take pictures)
 		\end{enumerate}
-		
-%done at 8/21/2017 Haomin Shi
 
 %----------------------------------------------------------------------------------------
-%	SECTION 3
+%	SECTION 3 Result and analysis
 %----------------------------------------------------------------------------------------
 
 \section{Result and Analysis}
-%text about this section
+The result will be showcased in the appendix section B of this lab report. The screenshot of the tutor terminal input will be included in the appendix A section.
 	\subsection{Discussion}
-	%things about this
-	
-	
+		\begin{enumerate}[label=(\arabic*)]
+			\item Terminal inputs(program segments) are in the appendix section of this lab report.
+			\item Based on the ``mecb\_chapter\_7.pdf'' document, the range of the available memory for user within the SANPER-1 ELU is \$0900 to \$7FFF.
+			\item The value of address lines will be listed in the appendix section. For this lab section there is no unusual event. 
+			\item Based on the ``mecb\_chapter\_7.pdf'' document, there are two serial ports: 
+				%\begin{enumerate}[label=(\arabic*)]
+					\begin{tabular}{l r}
+						1 - ACIA1: & \$10040 - \$10042 (even) \\
+						2 - ACIA2: & \$10041 - \$10043 (odd)\\
+					\end{tabular}
+				%\end{enumerate}
+			\item Based on the ``overview.pdf'' interfaces are:
+				\begin{enumerate}[label=(\alph*)]
+						\item Parallel Interface/Timer
+						\item Peripheral Interface Adapter
+						\item Asynchronous Communications Interface Adapter
+						\item Serial Port
+				\end{enumerate}
+			\item ``*AS'', ``*UDS'' and ``*LDS'' means:
+				\begin{enumerate}[label=(\alph*)]
+					\item ``*AS'' means Address Strobes, it is a three-state signal indicates that the information on the address bus is a valid address.
+					\item ``*UDS'' means Upper Data Strobes
+					\item ``*LDS'' means Lower Data Strobes
+				\end{enumerate}
+		\end{enumerate}
 
 %----------------------------------------------------------------------------------------
-%	SECTION 4
+%	SECTION 4 Conclusions
 %----------------------------------------------------------------------------------------
 
 \section{Conclusions}
-%text about this section
+The lab section is successful. The student was exposed to the SANPER unit and TUTOR program, meanwhile, the student had the chance to put their hands on the system by using The TRAP \#14 call.
 
+
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 5 AA
+%----------------------------------------------------------------------------------------
+
+\section{Appendices}
+\paragraph{Codes and Terminal Inputs}
+
+	\subsection{Appendix A}
+		\subsubsection{Appendix A.1: Original codes with comments}
+			\paragraph{\textit{Table 1.1} - Sample Program No.1}
+				\begin{verbatim}LEA.L $2000, A7	;load mem
+				MOVE.L #$900 ,A5		;set register with address, this line is at $1004
+				MOVE.L #$90B ,A6
+				MOVE.B #243, D7		;sys call out port 1
+				TRAP #14
+				MOVE.B #241, D7
+				TRAP #14
+				MOVE.B #227, D7
+				TRAP #14
+				BRA $1004	;back to start
+				.	;fin
+				\end{verbatim}
+			\paragraph{\textit{Table 1.2} - Sample Program No.2}
+				\begin{verbatim}MOVE.B D0, D1		;d0 to d1 copy, this line is at $900
+				MOVE.B #$AA, $1000		;move to a mem address
+				BRA $900	;back to start
+				.	;end
+				\end{verbatim}
+			\paragraph{\textit{Table 1.3} - Sample Program No.3}
+				\begin{verbatim}MOVE.B D0, D1		;copying, this line is at 900
+				MOVE.B #$AA, $1000		;move to a mem address
+				BRA $900	;loop back to start
+				.	;end
+				\end{verbatim}
+			\paragraph{\textit{Table 1.4} - Sample Program No.4}
+				\begin{verbatim}MOVE.B D0, D1		;copying, @mem $900
+				MOVE.B $1000, $1001		;move mem address
+				BRA $900	;loop
+				.	;end
+				\end{verbatim}
+			\subsubsection{Actuarial Input}
+					\begin{figure}[!htb]
+					\begin{center}
+					\includegraphics[width=0.65\textwidth]{PARTa} 
+					\caption{Part A.1 input}
+					%\end{center}
+					%\begin{center}
+					\includegraphics[width=0.65\textwidth]{PARTa1} 
+					\caption{Part A.2 input}
+					
+					\end{center}
+			\end{figure}
+			%\noindent\rule{8cm}{0.4pt}
+					\begin{figure}[!htb]
+					\begin{center}
+					\includegraphics[width=0.65\textwidth]{PARTb} 
+					\caption{Part B input}
+					\includegraphics[width=0.65\textwidth]{a} 
+					\caption{Part 1.2 input}
+					\end{center}\end{figure}
+					
+					
+					\begin{figure}[!htb]
+					\begin{center}
+					\includegraphics[width=0.65\textwidth]{b} 
+					\caption{Part 1.3  input}
+					\includegraphics[width=0.65\textwidth]{c} 
+					\caption{Part 1.4  input}
+					\end{center}\end{figure}
+					
+\FloatBarrier
+			
 
 
 %----------------------------------------------------------------------------------------
-%	SECTION 5
-%----------------------------------------------------------------------------------------
-
-\section{Appendix}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=0.65\textwidth]{placeholder} % Include the image placeholder.png
-\caption{Figure caption.}
-\end{center}
-\end{figure}
-
-%----------------------------------------------------------------------------------------
-%	SECTION 6
-%----------------------------------------------------------------------------------------
-
-\section{Answers to Definitions}
-
-\begin{enumerate}
-\begin{item}
-The \emph{atomic weight of an element} is the relative weight of one of its atoms compared to C-12 with a weight of 12.0000000$\ldots$, hydrogen with a weight of 1.008, to oxygen with a weight of 16.00. Atomic weight is also the average weight of all the atoms of that element as they occur in nature.
-\end{item}
-\begin{item}
-The \emph{units of atomic weight} are two-fold, with an identical numerical value. They are g/mole of atoms (or just g/mol) or amu/atom.
-\end{item}
-\begin{item}
-\emph{Percentage discrepancy} between an accepted (literature) value and an experimental value is
-\begin{equation*}
-\frac{\mathrm{experimental\;result} - \mathrm{accepted\;result}}{\mathrm{accepted\;result}}
-\end{equation*}
-\end{item}
-\end{enumerate}
-
-%----------------------------------------------------------------------------------------
-%	BIBLIOGRAPHY
-%----------------------------------------------------------------------------------------
-
-\bibliographystyle{apalike}
-
-\bibliography{sample}
-
-%----------------------------------------------------------------------------------------
+\subsection{Appendix B}
 
 
 \end{document}
