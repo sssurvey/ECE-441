@@ -1,0 +1,108 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 11/17/2017 7:20:14 AM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : Command table for all the functions
+00000000                             3  * Written by : Haomin Shi
+00000000                             4  * Date       : Nov 17
+00000000                             5  * Description: A table taht has all the function names in it and location pointer
+00000000                             6  *-----------------------------------------------------------
+00002000                             7      ORG    $2000
+00002000                             8  ;START:                  ; first instruction of program
+00002000                             9  
+00002000                            10  COMP_TABLE:
+00002000= 48 45 4C 50               11      DC.B 'HELP'
+00002004                            12      *AND OTHERS
+00002004                            13  
+00002004                            14  COMP_ADDR:
+00002004= 4845 4C50                 15      DC.W 'HELP'
+00002008                            16      *AND OTHERS
+00002008                            17  
+00002008                            18  
+00002008                            19  
+00002008                            20  *----------------------------------------------------------
+00002008                            21  *SHORT NAMES OF THE RESGERS, SETTED UP FOR EASE OF DISPLAY
+00003000                            22      ORG $3000
+00003000= 4430 2000                 23  BD0 DC.W 'D0 '
+00003004= 4431 2000                 24  BD1 DC.W 'D1 '
+00003008                            25  *AND MORE
+00003008                            26  
+00003008= 4130 2000                 27  BA0 DC.W 'A0 '
+0000300C                            28  *AND MORE
+0000300C                            29  
+0000300C                            30  
+0000300C                            31  
+0000300C                            32  *-------------------------------------------------------------
+0000300C                            33  *TABLES FOR THE EXCEPTION
+00002300                            34      ORG $2300
+00002300                            35      ;MOVE.L #RESET          $0
+00002300                            36      ;MOVE.L #BUS_ERR,        $8
+00002300                            37      ;MOVE.L #ADRS_ERR,       $C
+00002300                            38      ;MOVE.L #ILL_INST,       $10
+00002300                            39      *AND MORE
+00002300                            40  
+00002300                            41  *------------------------------------------------------------
+00002300                            42  *HANDY HELPERS, THESE ARE THE THINGS I NEED FOR NICER OUTPUTS    
+00002400                            43      ORG $2400
+00002400= 2D2D 2D2D 2D2D 2...       44  SPACE_BREAK DC.W '-------------'
+0000240E                            45  *------------------------------------------------------------
+0000240E                            46  *HELPER FUNCTIONS
+0000240E                            47  DISPLAY_HELPER_DATA_R:  ;TO USE THIS FUNCTION, NEED TO USE "LEA BD#, A1" BEFORE JSR
+0000240E                            48  *SETTING UP FOR LOOP IN ORDER TO OUTPUT DR AND AR WITH 000S INCLUDED
+0000240E  2843                      49      MOVE.L D3, A4       ;WHEN OUTPUT DR, USE A4 TO HOLD TEMP VALUES
+00002410  2A40                      50      MOVE.L D0, A5
+00002412  700E                      51      MOVE.L #14,D0       ;BASIC FUNCTION, SET UP OUTPUT FOR 'D0_'
+00002414  4E4F                      52      TRAP #15
+00002416  260D                      53      MOVE.L A5, D3
+00002418  7E00                      54      MOVE.L #0, D7
+0000241A                            55      
+0000241A                            56  LOOP:
+0000241A  0C47 0008                 57      CMPI.W #$0008, D7
+0000241E  6C18                      58      BGE.S DONE
+00002420  5247                      59      ADDI.W #1, D7
+00002422  E99B                      60      ROL.L #4, D3
+00002424  2203                      61      MOVE.L D3, D1
+00002426  C2BC 0000000F             62      AND.L #$F, D1
+0000242C  0641 0030                 63      ADD.W #$30, D1
+00002430  103C 0006                 64      MOVE.B #6, D0       ;EXPLAINE #6: Display single character in D1.B                        
+00002434  4E4F                      65      TRAP #15
+00002436  60E2                      66      BRA LOOP           ;CURRENTLY JUST A INFINITE LOOOP
+00002438                            67      
+00002438                            68  DONE:
+00002438  4E75                      69      RTS
+0000243A                            70  *------------------------------------------------------------
+0000243A                            71  *MAIN FUNCTION OF THE PROGRAM
+00001000                            72      ORG $1000
+00001000                            73  START:
+00001000                            74      *TESTING OUT THE HELPER_D_R
+00001000  43F8 3000                 75      LEA BD0, A1
+00001004  4EB8 240E                 76      JSR DISPLAY_HELPER_DATA_R
+00001008                            77      
+00001008  43F8 3004                 78      LEA BD1, A1
+0000100C  4EB8 240E                 79      JSR DISPLAY_HELPER_DATA_R
+00001010                            80  
+00001010                            81  
+00001010  FFFF FFFF                 82      SIMHALT             ; halt simulator
+00001014                            83  
+00001014                            84  * Put variables and constants here
+00001014                            85  
+00001014                            86      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BA0                 3008
+BD0                 3000
+BD1                 3004
+COMP_ADDR           2004
+COMP_TABLE          2000
+DISPLAY_HELPER_DATA_R  240E
+DONE                2438
+LOOP                241A
+SPACE_BREAK         2400
+START               1000

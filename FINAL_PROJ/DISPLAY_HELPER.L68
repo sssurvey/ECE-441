@@ -1,0 +1,65 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 11/17/2017 7:13:03 AM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : DISPLAY ALL REGISTERS
+00000000                             3  * Written by : HAOMIN SHI
+00000000                             4  * Date       : NOV 18
+00000000                             5  * Description: THIS IS A TEMP TEST FILE I MADE TO TEST THE DISPLAY ALL DA AND RA
+00000000                             6  * EXTRA FUNCTIONS: MIGHT ADD SUPPORT FOR THE MEMORY/ADDRESS LINE DISPLAY
+00000000                             7  *-----------------------------------------------------------
+00001000                             8      ORG    $1000
+00001000                             9      
+00001000                            10  START:                  ; first instruction of program
+00001000                            11  
+00001000                            12  
+00001000= 4430 2000                 13  BD0 DC.W 'D0 '
+00001004= 4431 2000                 14  BD1 DC.W 'D1 '
+00001008                            15      *AND MORE
+00001008                            16  
+00001008= 4130 2000                 17  BA0 DC.W 'A0 '
+0000100C                            18      *AND MORE
+0000100C                            19      
+0000100C  43F8 1000                 20      LEA BD0, A1
+00001010  4EB9 00001016             21      JSR DISPLAY_HELPER_DATA_R
+00001016                            22  DISPLAY_HELPER_DATA_R:
+00001016                            23  *SETTING UP FOR LOOP IN ORDER TO OUTPUT DR AND AR WITH 000S INCLUDED
+00001016  2843                      24      MOVE.L D3, A4       ;WHEN OUTPUT DR, USE A4 TO HOLD TEMP VALUES
+00001018  2A40                      25      MOVE.L D0, A5
+0000101A  700E                      26      MOVE.L #14,D0       ;BASIC FUNCTION, SET UP OUTPUT FOR 'D0_'
+0000101C  4E4F                      27      TRAP #15
+0000101E  260D                      28      MOVE.L A5, D3
+00001020  7E00                      29      MOVE.L #0, D7
+00001022                            30      
+00001022                            31  LOOP:
+00001022  0C47 0008                 32      CMPI.W #$0008, D7
+00001026  6C18                      33      BGE.S DONE
+00001028  5247                      34      ADDI.W #1, D7
+0000102A  E99B                      35      ROL.L #4, D3
+0000102C  2203                      36      MOVE.L D3, D1
+0000102E  C2BC 0000000F             37      AND.L #$F, D1
+00001034  0641 0030                 38      ADD.W #$30, D1
+00001038  103C 0006                 39      MOVE.B #6, D0       ;EXPLAINE #6: Display single character in D1.B                        
+0000103C  4E4F                      40      TRAP #15
+0000103E  60E2                      41      BRA LOOP           ;CURRENTLY JUST A INFINITE LOOOP
+00001040                            42      
+00001040                            43  DONE
+00001040  4E75                      44      RTS
+00001042  FFFF FFFF                 45      SIMHALT             ; halt simulator
+00001046                            46      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BA0                 1008
+BD0                 1000
+BD1                 1004
+DISPLAY_HELPER_DATA_R  1016
+DONE                1040
+LOOP                1022
+START               1000
