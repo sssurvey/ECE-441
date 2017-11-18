@@ -1,6 +1,6 @@
 00001000 Starting Address
-Assembler used: EASy68K Editor/Assembler v5.15.00
-Created On: 11/17/2017 7:13:03 AM
+Assembler used: EASy68K Editor/Assembler v5.15.04
+Created On: 11/17/2017 8:53:10 PM
 
 00000000                             1  *-----------------------------------------------------------
 00000000                             2  * Title      : DISPLAY ALL REGISTERS
@@ -13,41 +13,442 @@ Created On: 11/17/2017 7:13:03 AM
 00001000                             9      
 00001000                            10  START:                  ; first instruction of program
 00001000                            11  
-00001000                            12  
-00001000= 4430 2000                 13  BD0 DC.W 'D0 '
-00001004= 4431 2000                 14  BD1 DC.W 'D1 '
-00001008                            15      *AND MORE
-00001008                            16  
-00001008= 4130 2000                 17  BA0 DC.W 'A0 '
-0000100C                            18      *AND MORE
-0000100C                            19      
-0000100C  43F8 1000                 20      LEA BD0, A1
-00001010  4EB9 00001016             21      JSR DISPLAY_HELPER_DATA_R
-00001016                            22  DISPLAY_HELPER_DATA_R:
-00001016                            23  *SETTING UP FOR LOOP IN ORDER TO OUTPUT DR AND AR WITH 000S INCLUDED
-00001016  2843                      24      MOVE.L D3, A4       ;WHEN OUTPUT DR, USE A4 TO HOLD TEMP VALUES
-00001018  2A40                      25      MOVE.L D0, A5
-0000101A  700E                      26      MOVE.L #14,D0       ;BASIC FUNCTION, SET UP OUTPUT FOR 'D0_'
-0000101C  4E4F                      27      TRAP #15
-0000101E  260D                      28      MOVE.L A5, D3
-00001020  7E00                      29      MOVE.L #0, D7
-00001022                            30      
-00001022                            31  LOOP:
-00001022  0C47 0008                 32      CMPI.W #$0008, D7
-00001026  6C18                      33      BGE.S DONE
-00001028  5247                      34      ADDI.W #1, D7
-0000102A  E99B                      35      ROL.L #4, D3
-0000102C  2203                      36      MOVE.L D3, D1
-0000102E  C2BC 0000000F             37      AND.L #$F, D1
-00001034  0641 0030                 38      ADD.W #$30, D1
-00001038  103C 0006                 39      MOVE.B #6, D0       ;EXPLAINE #6: Display single character in D1.B                        
-0000103C  4E4F                      40      TRAP #15
-0000103E  60E2                      41      BRA LOOP           ;CURRENTLY JUST A INFINITE LOOOP
-00001040                            42      
-00001040                            43  DONE
-00001040  4E75                      44      RTS
-00001042  FFFF FFFF                 45      SIMHALT             ; halt simulator
-00001046                            46      END    START        ; last line of source
+00001000  48E7 FFFF                 12      MOVEM.L D0-D7/A0-A7, -(SP)
+00001004                            13  
+00001004  21C0 3000                 14      MOVE.L D0, $3000
+00001008  21C1 3010                 15      MOVE.L D1, $3010
+0000100C  21C2 3020                 16      MOVE.L D2, $3020
+00001010  21C3 3030                 17      MOVE.L D3, $3030
+00001014  21C4 3040                 18      MOVE.L D4, $3040
+00001018  21C5 3050                 19      MOVE.L D5, $3050
+0000101C  21C6 3060                 20      MOVE.L D6, $3060
+00001020  21C7 3070                 21      MOVE.L D7, $3070
+00001024                            22      
+00001024  21C8 3080                 23      MOVE.L A0, $3080
+00001028  21C9 3090                 24      MOVE.L A1, $3090
+0000102C  21CA 4000                 25      MOVE.L A2, $4000
+00001030  21CB 4010                 26      MOVE.L A3, $4010
+00001034  21CC 4020                 27      MOVE.L A4, $4020
+00001038  21CD 4030                 28      MOVE.L A5, $4030
+0000103C  21CE 4040                 29      MOVE.L A6, $4040
+00001040  21CF 4050                 30      MOVE.L A7, $4050
+00001044                            31      
+00001044  4280                      32      CLR.L D0    ;CLEAN UP REGISTERS FOR FUTURE USE
+00001046                            33      
+00001046  2200                      34      MOVE.L D0, D1
+00001048  2400                      35      MOVE.L D0, D2
+0000104A  2600                      36      MOVE.L D0, D3
+0000104C  2800                      37      MOVE.L D0, D4
+0000104E  2A00                      38      MOVE.L D0, D5
+00001050  2C00                      39      MOVE.L D0, D6
+00001052  2E00                      40      MOVE.L D0, D7
+00001054                            41     
+00001054  2040                      42      MOVE.L D0, A0
+00001056  2240                      43      MOVE.L D0, A1
+00001058  2440                      44      MOVE.L D0, A2
+0000105A  2640                      45      MOVE.L D0, A3
+0000105C  2840                      46      MOVE.L D0, A4
+0000105E  2A40                      47      MOVE.L D0, A5
+00001060  2C40                      48      MOVE.L D0, A6
+00001062  2E40                      49      MOVE.L D0, A7   ;ALL DATA/ADDR REGISTER CLEARED
+00001064                            50      
+00001064= 4430 2000                 51  BD0 DC.W 'D0 '
+00001068= 4431 2000                 52  BD1 DC.W 'D1 '
+0000106C= 4432 2000                 53  BD2 DC.W 'D2 '
+00001070= 4433 2000                 54  BD3 DC.W 'D3 '
+00001074= 4434 2000                 55  BD4 DC.W 'D4 '
+00001078= 4435 2000                 56  BD5 DC.W 'D5 '
+0000107C= 4436 2000                 57  BD6 DC.W 'D6 '
+00001080= 4437 2000                 58  BD7 DC.W 'D7 '
+00001084                            59  
+00001084= 4130 2000                 60  BA0 DC.W 'A0 '
+00001088= 4131 2000                 61  BA1 DC.W 'A1 '
+0000108C= 4132 2000                 62  BA2 DC.W 'A2 '
+00001090= 4133 2000                 63  BA3 DC.W 'A3 '
+00001094= 4134 2000                 64  BA4 DC.W 'A4 '
+00001098= 4135 2000                 65  BA5 DC.W 'A5 '
+0000109C= 4136 2000                 66  BA6 DC.W 'A6 '
+000010A0= 4137 2000                 67  BA7 DC.W 'A7 '
+000010A4                            68  
+000010A4= 2000                      69  LI DC.W ' ' 
+000010A6                            70  
+000010A6                            71  D0_P:
+000010A6  43F8 1064                 72      LEA     BD0,A1
+000010AA  303C 000E                 73      MOVE.W  #14,D0
+000010AE  4E4F                      74      TRAP    #15         
+000010B0  247C 00000000             75      MOVEA.L #0,A2
+000010B6  2638 3000                 76      MOVE.L  $3000,D3
+000010BA                            77  D0_L
+000010BA  B4FC 000E                 78      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000010BE  6E00 001A                 79      BGT     D0_D   
+000010C2  544A                      80      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+000010C4  E99B                      81      ROL.L   #4,D3
+000010C6  2203                      82      MOVE.L  D3,D1
+000010C8  C2BC 0000000F             83      AND.L   #$F,D1
+000010CE  143C 0010                 84      MOVE.B  #16,D2
+000010D2  103C 000F                 85      MOVE.B  #15,D0
+000010D6  4E4F                      86      TRAP    #15
+000010D8  60E0                      87      BRA     D0_L
+000010DA                            88  D0_D    
+000010DA  247C 00000000             89      MOVEA.L #0,A2
+000010E0  43F8 10A4                 90      LEA     LI,A1       ;SPACE
+000010E4  303C 000E                 91      MOVE.W  #14,D0
+000010E8  4E4F                      92      TRAP    #15
+000010EA                            93      *DONE D0
+000010EA                            94  *-------------------------------------
+000010EA                            95  D1_P:
+000010EA  43F8 1068                 96      LEA     BD1,A1
+000010EE  303C 000E                 97      MOVE.W  #14,D0
+000010F2  4E4F                      98      TRAP    #15         
+000010F4  2638 3010                 99      MOVE.L  $3010,D3
+000010F8                           100  D1_L
+000010F8  B4FC 000E                101      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000010FC  6E00 001A                102      BGT     D1_D   
+00001100  544A                     103      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+00001102  E99B                     104      ROL.L   #4,D3
+00001104  2203                     105      MOVE.L  D3,D1
+00001106  C2BC 0000000F            106      AND.L   #$F,D1
+0000110C  143C 0010                107      MOVE.B  #16,D2
+00001110  103C 000F                108      MOVE.B  #15,D0
+00001114  4E4F                     109      TRAP    #15
+00001116  60E0                     110      BRA     D1_L
+00001118                           111  D1_D    
+00001118  247C 00000000            112      MOVEA.L #0,A2
+0000111E  43F8 10A4                113      LEA     LI,A1       ;SPACE
+00001122  303C 000E                114      MOVE.W  #14,D0
+00001126  4E4F                     115      TRAP    #15
+00001128                           116      *DONE D1
+00001128                           117  *-------------------------------------    
+00001128                           118  D2_P:
+00001128  43F8 106C                119      LEA     BD2,A1
+0000112C  303C 000E                120      MOVE.W  #14,D0
+00001130  4E4F                     121      TRAP    #15         
+00001132  2638 3020                122      MOVE.L  $3020,D3
+00001136                           123  D2_L
+00001136  B4FC 000E                124      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+0000113A  6E00 001A                125      BGT     D2_D   
+0000113E  544A                     126      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+00001140  E99B                     127      ROL.L   #4,D3
+00001142  2203                     128      MOVE.L  D3,D1
+00001144  C2BC 0000000F            129      AND.L   #$F,D1
+0000114A  143C 0010                130      MOVE.B  #16,D2
+0000114E  103C 000F                131      MOVE.B  #15,D0
+00001152  4E4F                     132      TRAP    #15
+00001154  60E0                     133      BRA     D2_L
+00001156                           134  D2_D    
+00001156  247C 00000000            135      MOVEA.L #0,A2
+0000115C  43F8 10A4                136      LEA     LI,A1       ;SPACE
+00001160  303C 000E                137      MOVE.W  #14,D0
+00001164  4E4F                     138      TRAP    #15
+00001166                           139      *DONE D2
+00001166                           140  *-------------------------------------      
+00001166                           141  D3_P:
+00001166  43F8 1070                142      LEA     BD3,A1
+0000116A  303C 000E                143      MOVE.W  #14,D0
+0000116E  4E4F                     144      TRAP    #15         
+00001170  2638 3030                145      MOVE.L  $3030,D3
+00001174                           146  D3_L
+00001174  B4FC 000E                147      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+00001178  6E00 001A                148      BGT     D3_D   
+0000117C  544A                     149      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+0000117E  E99B                     150      ROL.L   #4,D3
+00001180  2203                     151      MOVE.L  D3,D1
+00001182  C2BC 0000000F            152      AND.L   #$F,D1
+00001188  143C 0010                153      MOVE.B  #16,D2
+0000118C  103C 000F                154      MOVE.B  #15,D0
+00001190  4E4F                     155      TRAP    #15
+00001192  60E0                     156      BRA     D3_L
+00001194                           157  D3_D    
+00001194  247C 00000000            158      MOVEA.L #0,A2
+0000119A  43F8 10A4                159      LEA     LI,A1       ;SPACE
+0000119E  303C 000D                160      MOVE.W  #13,D0      ;line break
+000011A2  4E4F                     161      TRAP    #15
+000011A4                           162      *DONE D3    
+000011A4                           163  *-------------------------------------    
+000011A4                           164  D4_P:
+000011A4  43F8 1074                165      LEA     BD4,A1
+000011A8  303C 000E                166      MOVE.W  #14,D0
+000011AC  4E4F                     167      TRAP    #15         
+000011AE  2638 3040                168      MOVE.L  $3040,D3
+000011B2                           169  D4_L
+000011B2  B4FC 000E                170      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000011B6  6E00 001A                171      BGT     D4_D   
+000011BA  544A                     172      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+000011BC  E99B                     173      ROL.L   #4,D3
+000011BE  2203                     174      MOVE.L  D3,D1
+000011C0  C2BC 0000000F            175      AND.L   #$F,D1
+000011C6  143C 0010                176      MOVE.B  #16,D2
+000011CA  103C 000F                177      MOVE.B  #15,D0
+000011CE  4E4F                     178      TRAP    #15
+000011D0  60E0                     179      BRA     D4_L
+000011D2                           180  D4_D    
+000011D2  247C 00000000            181      MOVEA.L #0,A2
+000011D8  43F8 10A4                182      LEA     LI,A1       ;SPACE
+000011DC  303C 000E                183      MOVE.W  #14,D0
+000011E0  4E4F                     184      TRAP    #15
+000011E2                           185      *DONE D4 
+000011E2                           186  *-------------------------------------
+000011E2                           187  D5_P:
+000011E2  43F8 1078                188      LEA     BD5,A1
+000011E6  303C 000E                189      MOVE.W  #14,D0
+000011EA  4E4F                     190      TRAP    #15         
+000011EC  2638 3050                191      MOVE.L  $3050,D3
+000011F0                           192  D5_L
+000011F0  B4FC 000E                193      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000011F4  6E00 001A                194      BGT     D5_D   
+000011F8  544A                     195      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+000011FA  E99B                     196      ROL.L   #4,D3
+000011FC  2203                     197      MOVE.L  D3,D1
+000011FE  C2BC 0000000F            198      AND.L   #$F,D1
+00001204  143C 0010                199      MOVE.B  #16,D2
+00001208  103C 000F                200      MOVE.B  #15,D0
+0000120C  4E4F                     201      TRAP    #15
+0000120E  60E0                     202      BRA     D5_L
+00001210                           203  D5_D    
+00001210  247C 00000000            204      MOVEA.L #0,A2
+00001216  43F8 10A4                205      LEA     LI,A1       ;SPACE
+0000121A  303C 000E                206      MOVE.W  #14,D0
+0000121E  4E4F                     207      TRAP    #15
+00001220                           208      *DONE D5 
+00001220                           209  *---------------------------------------
+00001220                           210  D6_P:
+00001220  43F8 107C                211      LEA     BD6,A1
+00001224  303C 000E                212      MOVE.W  #14,D0
+00001228  4E4F                     213      TRAP    #15         
+0000122A  2638 3060                214      MOVE.L  $3060,D3
+0000122E                           215  D6_L
+0000122E  B4FC 000E                216      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+00001232  6E00 001A                217      BGT     D6_D   
+00001236  544A                     218      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+00001238  E99B                     219      ROL.L   #4,D3
+0000123A  2203                     220      MOVE.L  D3,D1
+0000123C  C2BC 0000000F            221      AND.L   #$F,D1
+00001242  143C 0010                222      MOVE.B  #16,D2
+00001246  103C 000F                223      MOVE.B  #15,D0
+0000124A  4E4F                     224      TRAP    #15
+0000124C  60E0                     225      BRA     D6_L
+0000124E                           226  D6_D    
+0000124E  247C 00000000            227      MOVEA.L #0,A2
+00001254  43F8 10A4                228      LEA     LI,A1       ;SPACE
+00001258  303C 000E                229      MOVE.W  #14,D0
+0000125C  4E4F                     230      TRAP    #15
+0000125E                           231      *DONE D6
+0000125E                           232  *---------------------------------------
+0000125E                           233  D7_P:
+0000125E  43F8 1080                234      LEA     BD7,A1
+00001262  303C 000E                235      MOVE.W  #14,D0
+00001266  4E4F                     236      TRAP    #15         
+00001268  2638 3070                237      MOVE.L  $3070,D3
+0000126C                           238  D7_L
+0000126C  B4FC 000E                239      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+00001270  6E00 001A                240      BGT     D7_D   
+00001274  544A                     241      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+00001276  E99B                     242      ROL.L   #4,D3
+00001278  2203                     243      MOVE.L  D3,D1
+0000127A  C2BC 0000000F            244      AND.L   #$F,D1
+00001280  143C 0010                245      MOVE.B  #16,D2
+00001284  103C 000F                246      MOVE.B  #15,D0
+00001288  4E4F                     247      TRAP    #15
+0000128A  60E0                     248      BRA     D7_L
+0000128C                           249  D7_D    
+0000128C  247C 00000000            250      MOVEA.L #0,A2
+00001292  43F8 10A4                251      LEA     LI,A1       ;SPACE
+00001296  303C 000D                252      MOVE.W  #13,D0      ;also line break again
+0000129A  4E4F                     253      TRAP    #15
+0000129C                           254      *DONE D7
+0000129C                           255      *all data register done
+0000129C                           256  *---------------------------------------  
+0000129C                           257  *DISPLAYING ADDR REGISTERS
+0000129C                           258  A0_P:
+0000129C  43F8 1084                259      LEA     BA0,A1
+000012A0  303C 000E                260      MOVE.W  #14,D0
+000012A4  4E4F                     261      TRAP    #15         
+000012A6  2638 3080                262      MOVE.L  $3080,D3
+000012AA                           263  A0_L
+000012AA  B4FC 000E                264      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000012AE  6E00 001A                265      BGT     A0_D   
+000012B2  544A                     266      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+000012B4  E99B                     267      ROL.L   #4,D3
+000012B6  2203                     268      MOVE.L  D3,D1
+000012B8  C2BC 0000000F            269      AND.L   #$F,D1
+000012BE  143C 0010                270      MOVE.B  #16,D2
+000012C2  103C 000F                271      MOVE.B  #15,D0
+000012C6  4E4F                     272      TRAP    #15
+000012C8  60E0                     273      BRA     A0_L
+000012CA                           274  A0_D    
+000012CA  247C 00000000            275      MOVEA.L #0,A2
+000012D0  43F8 10A4                276      LEA     LI,A1       ;SPACE
+000012D4  303C 000E                277      MOVE.W  #14,D0     
+000012D8  4E4F                     278      TRAP    #15
+000012DA                           279      *DONE A0
+000012DA                           280  *---------------------------------------     
+000012DA                           281  A1_P:
+000012DA  43F8 1088                282      LEA     BA1,A1
+000012DE  303C 000E                283      MOVE.W  #14,D0
+000012E2  4E4F                     284      TRAP    #15         
+000012E4  2638 3090                285      MOVE.L  $3090,D3
+000012E8                           286  A1_L
+000012E8  B4FC 000E                287      CMP     #14,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000012EC  6E00 001A                288      BGT     A1_D   
+000012F0  544A                     289      ADD.W   #2,A2       ;GOSE TO THE NEXT DIGIT
+000012F2  E99B                     290      ROL.L   #4,D3
+000012F4  2203                     291      MOVE.L  D3,D1
+000012F6  C2BC 0000000F            292      AND.L   #$F,D1
+000012FC  143C 0010                293      MOVE.B  #16,D2
+00001300  103C 000F                294      MOVE.B  #15,D0
+00001304  4E4F                     295      TRAP    #15
+00001306  60E0                     296      BRA     A1_L
+00001308                           297  A1_D    
+00001308  247C 00000000            298      MOVEA.L #0,A2
+0000130E  43F8 10A4                299      LEA     LI,A1       ;SPACE
+00001312  303C 000E                300      MOVE.W  #14,D0     
+00001316  4E4F                     301      TRAP    #15
+00001318                           302      *DONE A1
+00001318                           303  *--------------------------------------- 
+00001318                           304  A2_P:
+00001318  43F8 108C                305      LEA     BA2,A1
+0000131C  303C 000E                306      MOVE.W  #14,D0
+00001320  4E4F                     307      TRAP    #15         
+00001322  2638 4000                308      MOVE.L  $4000,D3
+00001326                           309  A2_L
+00001326  B4FC 0007                310      CMP     #7,A2      ;EACH LOOP OUTPUT ONE DIGIT
+0000132A  6E00 001A                311      BGT     A2_D   
+0000132E  524A                     312      ADD.W   #1,A2       ;GOSE TO THE NEXT DIGIT
+00001330  E99B                     313      ROL.L   #4,D3
+00001332  2203                     314      MOVE.L  D3,D1
+00001334  C2BC 0000000F            315      AND.L   #$F,D1
+0000133A  143C 0010                316      MOVE.B  #16,D2
+0000133E  103C 000F                317      MOVE.B  #15,D0
+00001342  4E4F                     318      TRAP    #15
+00001344  60E0                     319      BRA     A2_L
+00001346                           320  A2_D    
+00001346  247C 00000000            321      MOVEA.L #0,A2
+0000134C  43F8 10A4                322      LEA     LI,A1       ;SPACE
+00001350  303C 000E                323      MOVE.W  #14,D0     
+00001354  4E4F                     324      TRAP    #15
+00001356                           325      *DONE A2
+00001356                           326  *------------------------------
+00001356                           327  A3_P:
+00001356  43F8 1090                328      LEA     BA3,A1
+0000135A  303C 000E                329      MOVE.W  #14,D0
+0000135E  4E4F                     330      TRAP    #15         
+00001360  2638 4010                331      MOVE.L  $4010,D3
+00001364                           332  A3_L
+00001364  B4FC 0007                333      CMP     #7,A2      ;EACH LOOP OUTPUT ONE DIGIT
+00001368  6E00 001A                334      BGT     A3_D   
+0000136C  524A                     335      ADD.W   #1,A2       ;GOSE TO THE NEXT DIGIT
+0000136E  E99B                     336      ROL.L   #4,D3
+00001370  2203                     337      MOVE.L  D3,D1
+00001372  C2BC 0000000F            338      AND.L   #$F,D1
+00001378  143C 0010                339      MOVE.B  #16,D2
+0000137C  103C 000F                340      MOVE.B  #15,D0
+00001380  4E4F                     341      TRAP    #15
+00001382  60E0                     342      BRA     A3_L
+00001384                           343  A3_D    
+00001384  247C 00000000            344      MOVEA.L #0,A2
+0000138A  43F8 10A4                345      LEA     LI,A1       ;SPACE
+0000138E  303C 000D                346      MOVE.W  #13,D0      ;LINE BREAK     
+00001392  4E4F                     347      TRAP    #15
+00001394                           348      *DONE A3
+00001394                           349  *-------------------------------
+00001394                           350  A4_P:
+00001394  43F8 1094                351      LEA     BA4,A1
+00001398  303C 000E                352      MOVE.W  #14,D0
+0000139C  4E4F                     353      TRAP    #15         
+0000139E  2638 4020                354      MOVE.L  $4020,D3
+000013A2                           355  A4_L
+000013A2  B4FC 0007                356      CMP     #7,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000013A6  6E00 001A                357      BGT     A4_D   
+000013AA  524A                     358      ADD.W   #1,A2       ;GOSE TO THE NEXT DIGIT
+000013AC  E99B                     359      ROL.L   #4,D3
+000013AE  2203                     360      MOVE.L  D3,D1
+000013B0  C2BC 0000000F            361      AND.L   #$F,D1
+000013B6  143C 0010                362      MOVE.B  #16,D2
+000013BA  103C 000F                363      MOVE.B  #15,D0
+000013BE  4E4F                     364      TRAP    #15
+000013C0  60E0                     365      BRA     A4_L
+000013C2                           366  A4_D    
+000013C2  247C 00000000            367      MOVEA.L #0,A2
+000013C8  43F8 10A4                368      LEA     LI,A1       ;SPACE
+000013CC  303C 000E                369      MOVE.W  #14,D0           
+000013D0  4E4F                     370      TRAP    #15
+000013D2                           371      *DONE A4
+000013D2                           372  *-------------------------------
+000013D2                           373  A5_P:
+000013D2  43F8 1098                374      LEA     BA5,A1
+000013D6  303C 000E                375      MOVE.W  #14,D0
+000013DA  4E4F                     376      TRAP    #15         
+000013DC  2638 4030                377      MOVE.L  $4030,D3
+000013E0                           378  A5_L
+000013E0  B4FC 0007                379      CMP     #7,A2      ;EACH LOOP OUTPUT ONE DIGIT
+000013E4  6E00 001A                380      BGT     A5_D   
+000013E8  524A                     381      ADD.W   #1,A2       ;GOSE TO THE NEXT DIGIT
+000013EA  E99B                     382      ROL.L   #4,D3
+000013EC  2203                     383      MOVE.L  D3,D1
+000013EE  C2BC 0000000F            384      AND.L   #$F,D1
+000013F4  143C 0010                385      MOVE.B  #16,D2
+000013F8  103C 000F                386      MOVE.B  #15,D0
+000013FC  4E4F                     387      TRAP    #15
+000013FE  60E0                     388      BRA     A5_L
+00001400                           389  A5_D    
+00001400  247C 00000000            390      MOVEA.L #0,A2
+00001406  43F8 10A4                391      LEA     LI,A1       ;SPACE
+0000140A  303C 000E                392      MOVE.W  #14,D0           
+0000140E  4E4F                     393      TRAP    #15
+00001410                           394      *DONE A5
+00001410                           395  *--------------------------------
+00001410                           396  A6_P:
+00001410  43F8 109C                397      LEA     BA6,A1
+00001414  303C 000E                398      MOVE.W  #14,D0
+00001418  4E4F                     399      TRAP    #15         
+0000141A  2638 4040                400      MOVE.L  $4040,D3
+0000141E                           401  A6_L
+0000141E  B4FC 0007                402      CMP     #7,A2      ;EACH LOOP OUTPUT ONE DIGIT
+00001422  6E00 001A                403      BGT     A6_D   
+00001426  524A                     404      ADD.W   #1,A2       ;GOSE TO THE NEXT DIGIT
+00001428  E99B                     405      ROL.L   #4,D3
+0000142A  2203                     406      MOVE.L  D3,D1
+0000142C  C2BC 0000000F            407      AND.L   #$F,D1
+00001432  143C 0010                408      MOVE.B  #16,D2
+00001436  103C 000F                409      MOVE.B  #15,D0
+0000143A  4E4F                     410      TRAP    #15
+0000143C  60E0                     411      BRA     A6_L
+0000143E                           412  A6_D    
+0000143E  247C 00000000            413      MOVEA.L #0,A2
+00001444  43F8 10A4                414      LEA     LI,A1       ;SPACE
+00001448  303C 000E                415      MOVE.W  #14,D0           
+0000144C  4E4F                     416      TRAP    #15
+0000144E                           417      *DONE A6
+0000144E                           418  *----------------------------
+0000144E                           419  A7_P:
+0000144E  43F8 10A0                420      LEA     BA7,A1
+00001452  303C 000E                421      MOVE.W  #14,D0
+00001456  4E4F                     422      TRAP    #15         
+00001458  2638 4050                423      MOVE.L  $4050,D3
+0000145C                           424  A7_L
+0000145C  B4FC 0007                425      CMP     #7,A2      ;EACH LOOP OUTPUT ONE DIGIT
+00001460  6E00 001A                426      BGT     A7_D   
+00001464  524A                     427      ADD.W   #1,A2       ;GOSE TO THE NEXT DIGIT
+00001466  E99B                     428      ROL.L   #4,D3
+00001468  2203                     429      MOVE.L  D3,D1
+0000146A  C2BC 0000000F            430      AND.L   #$F,D1
+00001470  143C 0010                431      MOVE.B  #16,D2
+00001474  103C 000F                432      MOVE.B  #15,D0
+00001478  4E4F                     433      TRAP    #15
+0000147A  60E0                     434      BRA     A7_L
+0000147C                           435  A7_D    
+0000147C  247C 00000000            436      MOVEA.L #0,A2
+00001482  43F8 10A4                437      LEA     LI,A1       ;SPACE
+00001486  303C 000D                438      MOVE.W  #13,D0      ;LINE BREAKS           
+0000148A  4E4F                     439      TRAP    #15
+0000148C                           440      *DONE A7
+0000148C                           441      *DONE DISPLAY ALL ADDR REGESTERS
+0000148C                           442  *----------------------------
+0000148C  4CDF FFFF                443      MOVEM.L (SP)+,D0-D7/A0-A7
+00001490                           444  
+00001490                           445  
+00001490  FFFF FFFF                446      SIMHALT             ; halt simulator
+00001494                           447      END    START        ; last line of source
 
 No errors detected
 No warnings generated
@@ -56,10 +457,69 @@ No warnings generated
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
-BA0                 1008
-BD0                 1000
-BD1                 1004
-DISPLAY_HELPER_DATA_R  1016
-DONE                1040
-LOOP                1022
+A0_D                12CA
+A0_L                12AA
+A0_P                129C
+A1_D                1308
+A1_L                12E8
+A1_P                12DA
+A2_D                1346
+A2_L                1326
+A2_P                1318
+A3_D                1384
+A3_L                1364
+A3_P                1356
+A4_D                13C2
+A4_L                13A2
+A4_P                1394
+A5_D                1400
+A5_L                13E0
+A5_P                13D2
+A6_D                143E
+A6_L                141E
+A6_P                1410
+A7_D                147C
+A7_L                145C
+A7_P                144E
+BA0                 1084
+BA1                 1088
+BA2                 108C
+BA3                 1090
+BA4                 1094
+BA5                 1098
+BA6                 109C
+BA7                 10A0
+BD0                 1064
+BD1                 1068
+BD2                 106C
+BD3                 1070
+BD4                 1074
+BD5                 1078
+BD6                 107C
+BD7                 1080
+D0_D                10DA
+D0_L                10BA
+D0_P                10A6
+D1_D                1118
+D1_L                10F8
+D1_P                10EA
+D2_D                1156
+D2_L                1136
+D2_P                1128
+D3_D                1194
+D3_L                1174
+D3_P                1166
+D4_D                11D2
+D4_L                11B2
+D4_P                11A4
+D5_D                1210
+D5_L                11F0
+D5_P                11E2
+D6_D                124E
+D6_L                122E
+D6_P                1220
+D7_D                128C
+D7_L                126C
+D7_P                125E
+LI                  10A4
 START               1000

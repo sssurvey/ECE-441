@@ -1,0 +1,142 @@
+00002000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.04
+Created On: 11/18/2017 1:09:21 AM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : MAIN
+00000000                             3  * Written by : HAOMIN SHI
+00000000                             4  * Date       : NOV 17
+00000000                             5  * Description: THIS WILL BE THE PROGRAM
+00000000                             6  *-----------------------------------------------------------
+00000500                             7      ORG     $500    
+00000500                             8  
+00000500                             9  COM_TABLE
+00000500= 4845 4C50                 10     DC.W 'HELP' 
+00000504= 4D44 5350                 11     DC.W 'MDSP'
+00000508= 4D 54 53 54               12     DC.B 'MTST'
+0000050C                            13  COMP_ADDR
+0000050C= 1012                      14     DC.W HELP
+0000050E                            15     ;DC.W MDSP
+0000050E                            16     ;DC.W MTST
+0000050E                            17  
+0000050E                            18  
+0000050E                            19  
+00001000                            20      ORG    $1000
+00001000= 4649 4E41 4C3E 2...       21  PROMPT DC.W 'FINAL> ',0
+0000100A= 5748 4154 3F21 0000       22  ERROR  DC.W 'WHAT?!',0
+00001012= 5448 4953 2049 5...       23  HELP   DC.W 'THIS IS HELP!',0
+00001022= 5448 4953 2049 5...       24  MM     DC.W 'THIS IS MM!',0
+00001030= 504C 4541 5345 2...       25  NOTHING DC.W 'PLEASE INPUT VALUE!',0
+00001046= 4558 4954 4544 0000       26  EXIT   DC.W  'EXITED',0
+0000104E                            27  
+0000104E                            28  MAIN:
+0000104E  48E7 FFFF                 29      MOVEM.L D0-D7/A0-A7,-(SP)    
+00001052  B27C 0000                 30      CMP.W #0, D1
+00001056  6700 0036                 31      BEQ ZERO
+0000105A  B27C 0004                 32      CMP.W #4, D1
+0000105E  6700 000A                 33      BEQ FOUR
+00001062  B27C 0002                 34      CMP.W #2, D1
+00001066  6700 001A                 35      BEQ TWO
+0000106A                            36      
+0000106A                            37  FOUR:   ;IF USER INPUT 4 LETTER COM, BRANCH IT TO HERE AND COMPARE CONTENT
+0000106A  0C91 48454C50             38      CMP.L #'HELP',(A1)  ;A1 IS POINTING TO WHERE MY INPUT IS
+00001070  6700 002C                 39      BEQ HELP_1
+00001074  0C91 45584954             40      CMP.L #'EXIT',(A1)
+0000107A  6700 0042                 41      BEQ EXIT_1
+0000107E  6000 004A                 42      BRA SYNTAX_ERROR
+00001082                            43      
+00001082                            44  TWO:    ;IF USER INPUT 2 LETTER COM, BRANCH IT TO HERE AND COMPARE CONTENT
+00001082  0C51 4D4D                 45      CMP.W #'MM',(A1)
+00001086  6700 0026                 46      BEQ MM_1    
+0000108A  6000 003E                 47      BRA SYNTAX_ERROR
+0000108E                            48  
+0000108E                            49  ZERO:    ;IF USER DONT PUT ANYTHING, ASK FOR USER INPUT
+0000108E  43F8 1030                 50      LEA NOTHING, A1
+00001092  700D                      51      MOVE.L #13,D0
+00001094  4E4F                      52      TRAP #15
+00001096  4CDF FFFF                 53      MOVEM.L (SP)+,D0-D7/A0-A7
+0000109A  6000 0F64                 54      BRA START
+0000109E                            55      
+0000109E                            56  HELP_1: ;USED IF USER INPUT HELP
+0000109E  43F8 1012                 57      LEA HELP, A1
+000010A2  700D                      58      MOVE.L #13,D0
+000010A4  4E4F                      59      TRAP #15
+000010A6  4CDF FFFF                 60      MOVEM.L (SP)+,D0-D7/A0-A7
+000010AA  6000 0F54                 61      BRA START
+000010AE                            62  
+000010AE                            63  MM_1:   ;SAME FOR MM
+000010AE  43F8 1022                 64      LEA MM, A1
+000010B2  700D                      65      MOVE.L #13,D0
+000010B4  4E4F                      66      TRAP #15
+000010B6  4CDF FFFF                 67      MOVEM.L (SP)+,D0-D7/A0-A7
+000010BA  6000 0F44                 68      BRA START
+000010BE                            69      
+000010BE                            70  EXIT_1:
+000010BE  43F8 1046                 71      LEA EXIT, A1
+000010C2  700D                      72      MOVE.L #13,D0
+000010C4  4E4F                      73      TRAP #15
+000010C6  6000 0F4E                 74      BRA EXITED
+000010CA                            75      
+000010CA                            76  SYNTAX_ERROR:
+000010CA  43F8 100A                 77      LEA ERROR, A1
+000010CE  303C 000D                 78      MOVE.W #13,D0   ;OUTPUT ERROR NEW LINE
+000010D2  4E4F                      79      TRAP #15
+000010D4  4CDF FFFF                 80      MOVEM.L (SP)+,D0-D7/A0-A7  
+000010D8  6000 0F26                 81      BRA START
+000010DC                            82  
+000010DC                            83  
+000010DC                            84  *-----------------------------------------------------
+000010DC                            85  
+00002000                            86      ORG $2000
+00002000                            87  
+00002000                            88  START:                  ; first instruction of program
+00002000  43F8 1000                 89      LEA PROMPT,A1
+00002004  303C 000E                 90      MOVE.W #14,D0       ;PRINT OUT THE PROMPT
+00002008  4E4F                      91      TRAP #15
+0000200A  43F8 3200                 92      LEA $3200, A1       ;SAVE THE USER INPUT AT THE $3200 MM LOCATION
+0000200E  7002                      93      MOVE.L #2,D0        
+00002010  4E4F                      94      TRAP #15
+00002012  6000 F03A                 95      BRA MAIN
+00002016                            96      ;DONE
+00002016                            97      
+00002016                            98      
+00002016                            99      
+00002016                           100      ;CMP.B #'.',(A1)
+00002016                           101      ;BNE B_COMMAND
+00002016                           102      ;BRA MAIN
+00002016                           103  
+00002016                           104  
+00002016                           105  EXITED
+00002016                           106  * Put program code here
+00002016                           107  
+00002016  FFFF FFFF                108      SIMHALT             ; halt simulator
+0000201A                           109  
+0000201A                           110  * Put variables and constants here
+0000201A                           111  
+0000201A                           112      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+COMP_ADDR           50C
+COM_TABLE           500
+ERROR               100A
+EXIT                1046
+EXITED              2016
+EXIT_1              10BE
+FOUR                106A
+HELP                1012
+HELP_1              109E
+MAIN                104E
+MM                  1022
+MM_1                10AE
+NOTHING             1030
+PROMPT              1000
+START               2000
+SYNTAX_ERROR        10CA
+TWO                 1082
+ZERO                108E
